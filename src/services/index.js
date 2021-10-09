@@ -1,4 +1,4 @@
-const { createModel, findUserNameModel } = require('../models');
+const { createModel, findUserNameModel, readByIdModel } = require('../models');
 const { messageError } = require('../util');
 
 const createService = async (user) => {
@@ -18,4 +18,13 @@ const createService = async (user) => {
   }
 };
 
-module.exports = { createService }
+const readByIdService = async (id) => {
+  try {
+    const result = await readByIdModel(id);
+    return result;
+  } catch (error) {
+    throw Error(error.message + messageError('search Users by ID'));
+  }
+};
+
+module.exports = { createService, readByIdService }
