@@ -11,6 +11,18 @@ const validateIfTheNameExists = (req, res, next) => {
   next();
 };
 
+const validateNameFormat = (req, res, next) => {
+  const { name } = req.body;
+
+  if (name && name.length < 4) {
+    return res
+      .status(STATUS_400_BAD_REQUEST)
+      .send({ message: 'The "name" field must be at least 4 characters long' });
+  }
+  
+  next();
+};
+
 const validateIfTheUserNameExists = (req, res, next) => {
   const { userName } = req.body;
   if (!userName || userName === '') {
@@ -54,4 +66,5 @@ module.exports = {
   validateIfTheUserNameExists,
   validateIfThePasswordExists,
   validateUserNameFormat,
+  validateNameFormat,
 };
