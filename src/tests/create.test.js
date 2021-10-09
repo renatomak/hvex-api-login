@@ -132,7 +132,7 @@ describe('1 - Endpoint POST /users', () => {
             'the username can then have letters, numbers or ".", "_", "-"',
         });
       });
-      
+
     await frisby
       .post(`${url}/users`, {
         name: 'user',
@@ -146,6 +146,22 @@ describe('1 - Endpoint POST /users', () => {
           message:
             'the username can then have letters, numbers or ".", "_", "-"',
         });
+      });
+  });
+
+  test('1.6 - Test to validate name format', async () => {
+    await frisby
+      .post(`${url}/users`, {
+        body: {
+          name: 'use',
+          userName: 'user.user1',
+          password: '123456',
+        },
+      })
+      .expect('status', STATUS_400_BAD_REQUEST)
+      .then((responseCreate) => {
+        const { json } = responseCreate;
+        expect(json).toEqual({ message: 'The "name" field must be at least 4 characters long' });
       });
   });
 });
