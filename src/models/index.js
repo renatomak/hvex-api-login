@@ -47,9 +47,16 @@ const updateModel = async (user) => {
   return { user: { _id, name, userName, dateAccess } };
 };
 
+const deleteModel = async (id) => {
+  const result = await connect().then((db) => db.collection(COLLECTION_NAME).deleteOne({ _id: ObjectId(id)}))
+  console.log(result);
+  return result;
+}
+
 module.exports = {
   createModel,
   findUserNameModel,
   readByIdModel,
   updateModel,
+  deleteModel,
 };
