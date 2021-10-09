@@ -23,7 +23,7 @@ describe('2 - Endpoint GET /users/:id', () => {
     await db.collection('users').deleteMany({});
     const users = {
       name: 'admin',
-      userName: 'root@userName.com',
+      userName: 'admin',
       password: 'admin',
     };
     await db.collection('users').insertOne(users);
@@ -46,11 +46,11 @@ describe('2 - Endpoint GET /users/:id', () => {
       .then((response) => {
         const { body } = response;
         result = JSON.parse(body);
-        responseUserId = result._id;
+        responseUserId = result.user._id;
       });
 
     await frisby
-      .get(`${url}/users/${result.user._id}`)
+      .get(`${url}/users/${responseUserId}`)
       .expect('status', STATUS_200_OK)
       .then((secondResponse) => {
         const {
