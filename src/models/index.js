@@ -17,6 +17,15 @@ const createModel = async ({ name, userName, password }) =>
     return user;
   });
 
+const findUserNameModel = async (userName) => {
+  const result = await connect().then((db) =>
+    db.collection(COLLECTION_NAME).findOne({ userName })
+  );
+  console.log({ user: result})
+  return { user: result};
+};
+
 module.exports = {
   createModel,
+  findUserNameModel,
 };
