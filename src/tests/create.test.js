@@ -1,6 +1,6 @@
 const frisby = require('frisby');
 const { MongoClient } = require('mongodb');
-const { STATUS_201_CREATED } = require('../util');
+const { STATUS_201_CREATED, STATUS_400_BAD_REQUEST } = require('../util');
 
 
 const mongoDbUrl = 'mongodb://localhost:27017/api-login';
@@ -54,6 +54,19 @@ describe('1 - Endpoint POST /users', () => {
         expect(user.name).toEqual(postUserMock.user.name);
         expect(user.userName).toEqual(postUserMock.user.userName);
         expect(user.password).toEqual(postUserMock.user.password);
+      });
+  });
+
+  test('1.3 - It will be validated that it is not possible to register an unnamed user', async () => {
+    await frisby
+      .post(`${url}/users`, {
+        userName: 'user.user',
+        password: '123456',
+      })
+      .expect('status', STATUS_400_BAD_REQUEST)
+      .then((responseCreate) => {
+        const { json } = responseCreate;
+        expect(json).toEqual({ message: 'The "name" field is mandatory.' });
       });
   });
 
