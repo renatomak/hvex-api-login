@@ -52,7 +52,12 @@ As funcionalidades da API são:
 <img src="asserts/output-erro5.png" alt="error" style="max-width:100%;" />
 
     2. Buscar um usuário cadastrado fornecendo o identificador único na rota '/users/:id' com o método GET (READ);
+        Atenção: o identificador único é gerado pelo banco de Dados MongoDB.
+        exemplo: 6161d59fb94acb000ee3ffc6
+
     3. Atualizar um cadastro, fornecendo o identificador único na rota '/users/:id' com o método PUT (UPDATE);
+        Atenção: para alterar um cadastro com sucesso é necessário observar as restrições impostas no item 1.
+        
     4. Excluir um cadastro, fornecendo um identificador único na rota 'users/:id' com o método DELETE;
 
 ## Itens obrigatórios:
