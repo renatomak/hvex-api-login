@@ -25,7 +25,18 @@ const findUserNameModel = async (userName) => {
   return { user: result};
 };
 
+const readByIdModel = async (id) => {
+  if (!ObjectId.isValid(id)) {
+    return null;
+  }
+  return connect().then(async (db) => {
+    const user = await db.collection(COLLECTION_NAME).findOne(ObjectId(id));
+    return { user };
+  });
+};
+
 module.exports = {
   createModel,
   findUserNameModel,
+  readByIdModel,
 };
