@@ -1,6 +1,6 @@
 # API RESTFull - HVEX-LOGIN
 
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/renatomak/teste-instruct-magpy/blob/main/LICENSE)
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/renatomak/hvex-api-login/blob/main/LICENSE)
 
 ## Sobre o projeto
 
