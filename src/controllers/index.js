@@ -6,7 +6,7 @@ const {
   STATUS_200_OK,
   STATUS_422_UNPROCESSABLE_ENTITY,
 } = require('../util');
-const { createService, readByIdService } = require('../services');
+const { createService, readByIdService, updateService } = require('../services');
 
 const createUser = rescue(async (req, res) => {
   try {
@@ -49,4 +49,28 @@ const readUser = rescue(async (req, res) => {
   }
 });
 
-module.exports = { createUser, readUser };
+const updateUser = rescue(async (req, res) => {
+  try {
+    const { body } = req;
+    const { id } = req.params;
+    const user = { ...body, _id: id };
+
+    const result = await updateService(user);
+    console.log('RESULT: ', result)
+
+    if (result?.registered) {
+      return res
+        .status(STATUS_409_CONFLICT)
+        .json({ message: 'User already registered!' });
+    }
+
+    return res.status(STATUS_200_OK).json(result);
+  } catch (error) {
+    console.error(error.message);
+    return res
+      .status(STATUS_422_UNPROCESSABLE_ENTITY)
+      .json({ message: 'Error while updating' });
+  }
+});
+
+module.exports = { createUser, readUser, updateUser };
