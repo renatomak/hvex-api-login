@@ -12,7 +12,7 @@ As funcionalidades da API são:
     Para criar com sucesso um novo usuário é preciso:
 
     - Informar um “name” com 4 (quatro) caracteres ou mais;
-    - Inserir um “userName” usando letras, números, e os caracteres “.”, “\_”, “-.
+    - Inserir um “userName” usando letras, números, e os caracteres “.”, “_”, “-.
     - O "userName" deve ser único.
     - Inserir uma senha;
     - A data será gerada internamente pela aplicação.
