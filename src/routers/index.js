@@ -4,6 +4,6 @@ const Middleware = require('../middlewares');
 
 const router = express.Router();
 
-router.use('/users', Middleware.validateIfTheNameExists, createUser);
+router.use('/users', Middleware.validateIfTheNameExists, Middleware.validateIfTheUserNameExists, createUser);
 
 module.exports = router;

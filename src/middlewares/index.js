@@ -11,4 +11,14 @@ const validateIfTheNameExists = (req, res, next) => {
   next();
 };
 
-module.exports = { validateIfTheNameExists };
+const validateIfTheUserNameExists = (req, res, next) => {
+  const { userName } = req.body;
+  if (!userName || userName === '') {
+    return res
+      .status(STATUS_400_BAD_REQUEST)
+      .send({ message: 'The "userName" field is mandatory' });
+  }
+  next();
+};
+
+module.exports = { validateIfTheNameExists, validateIfTheUserNameExists };
