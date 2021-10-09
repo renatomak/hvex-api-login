@@ -1,6 +1,6 @@
 const frisby = require('frisby');
 const { MongoClient } = require('mongodb');
-const { STATUS_201_CREATED } = require('../../util');
+const { STATUS_201_CREATED } = require('../util');
 
 
 const mongoDbUrl = 'mongodb://localhost:27017/api-login';
