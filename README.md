@@ -55,10 +55,30 @@ As funcionalidades da API são:
         Atenção: o identificador único é gerado pelo banco de Dados MongoDB.
         exemplo: 6161d59fb94acb000ee3ffc6
 
+### Resultado de uma busca com id válido:
+
+<img src="asserts/output-read.png" alt="error" style="max-width:100%;" />
+
+### Resultado de uma busca com id inválido:
+
+<img src="asserts/output-erro6.png" alt="error" style="max-width:100%;" />
+
     3. Atualizar um cadastro, fornecendo o identificador único na rota '/users/:id' com o método PUT (UPDATE);
         Atenção: para alterar um cadastro com sucesso é necessário observar as restrições impostas no item 1.
+
+        Observação: para exemplos veja o item 1.
         
     4. Excluir um cadastro, fornecendo um identificador único na rota 'users/:id' com o método DELETE;
+
+### Resultado de uma exclusão com id válido:
+
+<img src="asserts/output-delete.png" alt="error" style="max-width:100%;" />
+
+### Resultado de uma exclusão com id inválido:
+
+<img src="asserts/output-erro7.png" alt="error" style="max-width:100%;" />
+
+---
 
 ## Itens obrigatórios:
 
@@ -84,6 +104,12 @@ As funcionalidades da API são:
 <img src="https://cdn.icon-icons.com/icons2/2415/PNG/512/heroku_plain_wordmark_logo_icon_146480.png" alt="heroku" width="40" height="40" style="max-width:100%;" /> &nbsp; &nbsp; &nbsp; &nbsp; -->
 
 ## Como executar o projeto localmente
+
+### Pré-requisitos
+    Será necessário ter instalado:
+    - NodeJS;
+    - MongoDB;
+    - npm;
 
 1 - clone o [repositório](https://github.com/renatomak/hvex-api-login.git) do projeto;
 
