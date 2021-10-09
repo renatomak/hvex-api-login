@@ -83,4 +83,18 @@ describe('1 - Endpoint POST /users', () => {
       });
   });
 
+  test('1.4 - Test to see if the password field exists', async () => {
+    await frisby
+      .post(`${url}/users`, {
+        name: 'user',
+        userName: 'user.user'
+      })
+      .expect('status', STATUS_400_BAD_REQUEST)
+      .then((responseCreate) => {
+        const { json } = responseCreate;
+        console.log(json)
+        expect(json).toEqual({ message: 'The "password" field is mandatory' });
+      });
+  });
+
 });
