@@ -21,14 +21,37 @@ const validateIfTheUserNameExists = (req, res, next) => {
   next();
 };
 
-const validateIfThePasswordExists = (req, res, next) => {
-  const { password } = req.body;
+const validateUserNameFormat = (req, res, next) => {
+  const { userName } = req.body;
 
-  if (!password || password === '') { 
-    return res.status(STATUS_400_BAD_REQUEST).send({ message: 'The "password" field is mandatory' });
+  const RegExp = /^[A-Za-z]+([A-Za-z]*|[._-]?[A-Za-z0-9]+)*$/;
+
+  if (!RegExp.test(userName)) {
+    return res
+      .status(STATUS_400_BAD_REQUEST)
+      .send({
+        message: 'the username can then have letters, numbers or ".", "_", "-"',
+      });
   }
 
   next();
-}
+};
 
-module.exports = { validateIfTheNameExists, validateIfTheUserNameExists, validateIfThePasswordExists };
+const validateIfThePasswordExists = (req, res, next) => {
+  const { password } = req.body;
+
+  if (!password || password === '') {
+    return res
+      .status(STATUS_400_BAD_REQUEST)
+      .send({ message: 'The "password" field is mandatory' });
+  }
+
+  next();
+};
+
+module.exports = {
+  validateIfTheNameExists,
+  validateIfTheUserNameExists,
+  validateIfThePasswordExists,
+  validateUserNameFormat,
+};

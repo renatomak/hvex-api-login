@@ -9,6 +9,7 @@ router.use(
   Middleware.validateIfTheNameExists,
   Middleware.validateIfTheUserNameExists,
   Middleware.validateIfThePasswordExists,
+  Middleware.validateUserNameFormat,
   createUser
 );
 
