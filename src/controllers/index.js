@@ -3,8 +3,10 @@ const {
   STATUS_201_CREATED,
   STATUS_400_BAD_REQUEST,
   STATUS_409_CONFLICT,
+  STATUS_200_OK,
+  STATUS_422_UNPROCESSABLE_ENTITY,
 } = require('../util');
-const { createService } = require('../services');
+const { createService, readByIdService } = require('../services');
 
 const createUser = rescue(async (req, res) => {
   try {
@@ -28,4 +30,23 @@ const createUser = rescue(async (req, res) => {
   }
 });
 
-module.exports = { createUser };
+const readUser = rescue(async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const result = await readByIdService(id);
+
+    if (!(result.user)) {
+      throw new Error();
+    }
+
+    return res.status(STATUS_200_OK).json(result);
+  } catch (error) {
+    console.error(error.message);
+    return res
+      .status(STATUS_422_UNPROCESSABLE_ENTITY)
+      .json({ message: 'User not found' });
+  }
+});
+
+module.exports = { createUser, readUser };
