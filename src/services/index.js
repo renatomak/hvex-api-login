@@ -1,9 +1,13 @@
-const { createModel, findUserNameModel, readByIdModel } = require('../models');
+const {
+  createModel,
+  findUserNameModel,
+  readByIdModel,
+  updateModel,
+} = require('../models');
 const { messageError } = require('../util');
 
 const createService = async (user) => {
   try {
-
     const registered = await findUserNameModel(user.userName);
 
     if (registered?.user) {
@@ -27,4 +31,22 @@ const readByIdService = async (id) => {
   }
 };
 
-module.exports = { createService, readByIdService }
+const updateService = async (user) => {
+  try {
+    const { userName } = user;
+
+    if (userName) {
+      const registered = await findUserNameModel(userName);
+      if (registered.user && user._id != registered.user._id) {
+        return { registered: true };
+      }
+    }
+
+    const result = await updateModel(user);
+    return result;
+  } catch (error) {
+    throw Error(messageError(error.message, 'update to user'));
+  }
+};
+
+module.exports = { createService, readByIdService, updateService };
