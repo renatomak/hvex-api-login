@@ -57,7 +57,7 @@ describe('1 - Endpoint POST /users', () => {
       });
   });
 
-  test('1.3 - It will be validated that it is not possible to register an unnamed user', async () => {
+  test('1.2 - It will be validated that it is not possible to register an unnamed user', async () => {
     await frisby
       .post(`${url}/users`, {
         userName: 'user.user',
@@ -67,6 +67,19 @@ describe('1 - Endpoint POST /users', () => {
       .then((responseCreate) => {
         const { json } = responseCreate;
         expect(json).toEqual({ message: 'The "name" field is mandatory.' });
+      });
+  });
+
+  test('1.3 - Test to see if the username field exists', async () => {
+    await frisby
+      .post(`${url}/users`, {
+        name: 'user',
+        password: '123456',
+      })
+      .expect('status', STATUS_400_BAD_REQUEST)
+      .then((responseCreate) => {
+        const { json } = responseCreate;
+        expect(json).toEqual({ message: 'The "userName" field is mandatory' });
       });
   });
 
