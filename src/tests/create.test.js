@@ -3,7 +3,7 @@ const { MongoClient } = require('mongodb');
 const {
   STATUS_201_CREATED,
   STATUS_400_BAD_REQUEST,
-  STATUS_200_OK,
+  STATUS_409_CONFLICT,
 } = require('../util');
 
 const mongoDbUrl = 'mongodb://localhost:27017/api-login';
@@ -161,7 +161,32 @@ describe('1 - Endpoint POST /users', () => {
       .expect('status', STATUS_400_BAD_REQUEST)
       .then((responseCreate) => {
         const { json } = responseCreate;
-        expect(json).toEqual({ message: 'The "name" field must be at least 4 characters long' });
+        expect(json).toEqual({
+          message: 'The "name" field must be at least 4 characters long',
+        });
+      });
+  });
+
+  test('1.7 - It will be validated that the "userName" field is unique', async () => {
+    await frisby
+      .post(`${url}/users/`, {
+        name: 'fulano de Tal',
+        userName: 'fulano.tal',
+        password: '12345678',
+      })
+      .expect('status', STATUS_201_CREATED);
+
+    await frisby
+      .post(`${url}/users/`, {
+        name: 'Xablau',
+        userName: 'fulano.tal',
+        password: '12345678',
+      })
+      .expect('status', STATUS_409_CONFLICT)
+      .then((response) => {
+        const { body } = response;
+        const result = JSON.parse(body);
+        expect(result.message).toBe('User already registered!');
       });
   });
 });
