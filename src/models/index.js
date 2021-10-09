@@ -35,8 +35,21 @@ const readByIdModel = async (id) => {
   });
 };
 
+const updateModel = async (user) => {
+  const { _id, name, userName, password } = user;
+  const dateAccess = new Date();
+
+  await connect().then((db) => {
+    db.collection(COLLECTION_NAME).updateOne({ _id: ObjectId(_id) }, [
+      { $set: { name, userName, password,  dateAccess } },
+    ]);
+  });
+  return { user: { _id, name, userName, dateAccess } };
+};
+
 module.exports = {
   createModel,
   findUserNameModel,
   readByIdModel,
+  updateModel,
 };
