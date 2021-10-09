@@ -3,6 +3,7 @@ const {
   findUserNameModel,
   readByIdModel,
   updateModel,
+  deleteModel,
 } = require('../models');
 const { messageError } = require('../util');
 
@@ -49,4 +50,19 @@ const updateService = async (user) => {
   }
 };
 
-module.exports = { createService, readByIdService, updateService };
+const deleteService = async (id) => {
+  try {
+    const result = await deleteModel(id);
+
+    return result;
+  } catch (error) {
+    throw Error(messageError(error.message, 'delete to user'));
+  }
+};
+
+module.exports = {
+  createService,
+  readByIdService,
+  updateService,
+  deleteService,
+};
