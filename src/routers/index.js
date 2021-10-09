@@ -1,5 +1,10 @@
 const express = require('express');
-const { createUser, readUser, updateUser } = require('../controllers');
+const {
+  createUser,
+  readUser,
+  updateUser,
+  deleteUser,
+} = require('../controllers');
 const Middleware = require('../middlewares');
 
 const router = express.Router();
@@ -22,5 +27,7 @@ router.put(
 );
 
 router.get('/users/:id', readUser);
+
+router.delete('/users/:id', deleteUser);
 
 module.exports = router;
