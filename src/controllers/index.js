@@ -5,16 +5,22 @@ const {
   STATUS_409_CONFLICT,
   STATUS_200_OK,
   STATUS_422_UNPROCESSABLE_ENTITY,
+  STATUS_404_NOT_FOUND,
 } = require('../util');
-const { createService, readByIdService, updateService } = require('../services');
+const {
+  createService,
+  readByIdService,
+  updateService,
+  deleteService,
+} = require('../services');
 
 const createUser = rescue(async (req, res) => {
   try {
     const { name, userName, password } = req.body;
 
     const user = await createService({ name, userName, password });
-    console.log(user)
-    
+    console.log(user);
+
     if (user.registered) {
       return res
         .status(STATUS_409_CONFLICT)
@@ -36,7 +42,7 @@ const readUser = rescue(async (req, res) => {
 
     const result = await readByIdService(id);
 
-    if (!(result.user)) {
+    if (!result.user) {
       throw new Error();
     }
 
@@ -56,7 +62,7 @@ const updateUser = rescue(async (req, res) => {
     const user = { ...body, _id: id };
 
     const result = await updateService(user);
-    console.log('RESULT: ', result)
+    console.log('RESULT: ', result);
 
     if (result?.registered) {
       return res
@@ -73,4 +79,23 @@ const updateUser = rescue(async (req, res) => {
   }
 });
 
-module.exports = { createUser, readUser, updateUser };
+const deleteUser = rescue(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await deleteService(id);
+
+    if(!(result?.deletedCount)){
+      throw new Error();
+    }
+    return res
+      .status(STATUS_200_OK)
+      .json({ message: 'user removed successfully' });
+  } catch (error) {
+    console.error(error.message);
+    return res
+      .status(STATUS_404_NOT_FOUND)
+      .json({ message: 'Error while delete' });
+  }
+});
+
+module.exports = { createUser, readUser, updateUser, deleteUser };
